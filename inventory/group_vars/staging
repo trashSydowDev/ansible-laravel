@@ -1,0 +1,3 @@
+---
+# Group Vars for EC2_Tag_Environment_Staging
+newrelic_appname: leroy_staging

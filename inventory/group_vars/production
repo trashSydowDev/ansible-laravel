@@ -1,0 +1,3 @@
+---
+# Group Vars for EC2_Tag_Environment_Production
+newrelic_appname: leroy_production
