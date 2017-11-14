@@ -1,20 +1,25 @@
-Provisioning and configuring your Laravel App using Ansible
+# Provisioning and configuring your Laravel App using Ansible
 
-#Install pip and Ansible
+<h3>Install pip and Ansible</h3>
 
 Verify if you have pip installed:
+
 `$ sudo easy_install pip`
 
 Install Ansible using pip:
+
 `$ sudo pip install ansible`
 
-#Configure your AWS credentials 
+<h3>Configure your AWS credentials</h3>
 
 Install AWS Cli using pip:
+
 `$ sudo pip install awscli --upgrade`
 
-Install boto library 
+Install boto library:
+
 `$ sudo pip install boto --upgrade`
+
 
 Configure your AWS profile:
 ```
@@ -27,6 +32,6 @@ Default output format [None]: json
 
 Warning: Create a credential with EC2 and VPC FullAccess.
 
-#Configure and run AWS iinit playbook. 
+<h3>Configure and run AWS iinit playbook</h3>
 
-#Provision and configure your environment:
+<h3>Provision and configure your environment</h3>
