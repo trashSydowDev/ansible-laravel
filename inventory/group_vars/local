@@ -1,2 +1,24 @@
 user: leandro
 remote_user: leandro
+
+app_name: laravel
+app_env: local
+app_debug: true
+app_log_level: debug
+app_url: http://localhost
+
+db_connection: mysql
+db_host: 127.0.0.1
+db_port: 3306
+db_database: homestead1
+db_username: homestead1
+db_password: secret
+
+broadcast_driver: log
+cache_driver: file
+session_driver: file
+queue_driver: sync
+
+redis_host: 127.0.0.1
+redis_password: null
+redis_port: 6379

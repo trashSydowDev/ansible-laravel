@@ -1,0 +1,6 @@
+- name: Create AWS Config File
+  copy:
+    content: ""
+    dest: "{{ aws_var_config_file }}"
+    force: no
+    mode: 0664

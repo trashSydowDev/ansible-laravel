@@ -1,0 +1,15 @@
+# AWS Default Region
+aws_region:     "us-east-1"
+
+# VPC Information
+vpc_name:       "ansible-demo"
+vpc_cidr_block: "10.200.0.0/22"
+
+# Public Subnet
+public_subnet_1_cidr:  "10.200.0.0/24"
+
+# Public Key Path
+aws_key_path: "/home/leandro/.ssh/ansible-demo-key.pub"
+
+# AWS Var Config File
+aws_var_config_file: "/etc/ansible/library/aws_var_config.yml"

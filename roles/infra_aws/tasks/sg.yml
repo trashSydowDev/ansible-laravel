@@ -1,0 +1,40 @@
+- name: Create Security Group for Laravel App
+  ec2_group:
+    name: sg_laravel
+    description: "Laravel Security Group"
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ aws_region }}"
+    state: present
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 3306
+        to_port: 3306
+        cidr_ip: "{{ vpc_cidr_block }}"
+  register: sg_laravel
+
+- name: Set SG Laravel in variable
+  set_fact:
+    sg_laravel_id: "{{ sg_laravel.group_id }}"
+    sg_laravel_gname: "{{ sg_laravel.group_name }}"
+
+- name: Save SG Laravel ID into AWS VAR Config File
+  lineinfile:
+    path: "{{ aws_var_config_file }}"
+    regexp: "^sg_laravel_id:"
+    line: "sg_laravel_id: {{ sg_laravel_id }}"
+  when: sg_laravel.changed
+
+- name: Save SG Laravel Name into AWS VAR Config File
+  lineinfile:
+    path: "{{ aws_var_config_file }}"
+    regexp: "^sg_laravel_gname:"
+    line: "sg_laravel_gname: {{ sg_laravel_gname }}"
+  when: sg_laravel.changed

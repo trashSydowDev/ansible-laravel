@@ -1,31 +1,14 @@
-# Hosts
-# By Leandro Martins
-
 [local]
 localhost ansible_connection=local ansible_python_inperpreter=python
 
 ############ Environments ############
 
-[tag_Environment_Staging]
+[tag_Environment_staging]
 
-[tag_Environment_Production]
+[tag_Environment_production]
 
 [staging:children]
-tag_Environment_Staging
+tag_Environment_staging
 
 [production:children]
-tag_Environment_Production
-
-############ Stack ############
-
-# Web Application (Laravel)
-[tag_Stack_Web]
-
-[web:children]
-tag_Stack_Web
-
-# MySQL Database
-[tag_Stack_MySQL]
-
-[mysql:children]
-tag_Stack_MySQL
+tag_Environment_production

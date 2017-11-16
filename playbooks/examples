@@ -1,0 +1,10 @@
+
+## EC2 
+$ ansible-playbook playbooks/provis_ec2.yml -e "aws_environment=staging"
+$ ansible-playbook playbooks/provis_ec2.yml -e "aws_environment=production"
+
+## Laravel App
+
+ansible-playbook playbooks/laravel.ym -l local
+ansible-playbook playbooks/laravel.ym -l staging
+ansible-playbook playbooks/laravel.ym -l production

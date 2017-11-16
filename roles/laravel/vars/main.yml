@@ -1,0 +1,15 @@
+---
+
+# Laravel Project Configuration
+app_name: "laraconfbrasil2017"
+laravel_app_path: "/var"
+
+# Composer variables
+composer_path: /usr/local/bin/composer
+composer_keep_updated: false
+composer_version: ''
+
+# The directory where global packages will be installed.
+composer_home_path: '~/.composer'
+composer_home_owner: root
+composer_home_group: root

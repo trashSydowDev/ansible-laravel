@@ -1,0 +1,19 @@
+- name: Install Apache (RedHat Family)
+  yum: state=present name=httpd
+  when: ansible_os_family == "RedHat"
+  tags: apache
+
+- name: Enable Apache (RedHat Family)
+  service: name=httpd enabled=yes state=started
+  when: ansible_os_family == "RedHat"
+  tags: apache
+
+- name: Install Apache (Debian Family)
+  apt: state=present name=apache2
+  when: ansible_os_family == "Debian"
+  tags: apache
+
+- name: Enable Apache (Debian Family)
+  service: name=apache2 enabled=yes state=started
+  when: ansible_os_family == "Debian"
+  tags: apache

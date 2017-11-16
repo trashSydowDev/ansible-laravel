@@ -1,0 +1,38 @@
+---
+- name: Launch Instance
+  ec2:
+    key_name: "{{ keypair }}"
+    group: "{{ security_group }}"
+    instance_type: "{{ instance_type }}"
+    image: "{{ image }}"
+    wait: true
+    region: "{{ region }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    assign_public_ip: "{{ public }}"
+    termination_protection: no
+    volumes:
+      - device_name: /dev/xvda
+        volume_type: gp2
+        volume_size: 8
+        delete_on_termination: True
+    instance_tags:
+      Name: "{{ ec2_name }}"
+      Environment: "{{ aws_environment }}"
+    user_data: |
+      #!/bin/bash
+      apt-get update
+      apt-get install -y python-simplejson
+  register: ec2
+
+- name: Waiting Instance(s) Until State = Ready
+  wait_for:
+    host: "{{ item.public_ip }}"
+    port: 22
+    delay: 60
+    timeout: 320
+    state: started
+  with_items: "{{ ec2.instances }}"
+
+- name: "Wait for Cloud Init on First Boot"
+  pause: seconds=90
+  when: ec2|changed

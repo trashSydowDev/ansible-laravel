@@ -1,0 +1,9 @@
+---
+
+- import_tasks: create_var_file.yml
+- import_tasks: vpc.yml
+- import_tasks: igw.yml
+- import_tasks: subnet.yml
+- import_tasks: route.yml
+- import_tasks: sg.yml
+- import_tasks: key.yml

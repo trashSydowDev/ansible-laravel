@@ -1,0 +1,14 @@
+- name: Import Public Key on AWS
+  local_action:
+    module: ec2_key
+    name: ansible-demo-key
+    state: present
+    region: "{{ aws_region }}"
+  register: ec2_key
+
+- name: Save Private Key
+  copy:
+    content: "{{ ec2_key.key.private_key }}" 
+    dest: "/etc/ansible/library/ansible-demo-key.pem" 
+    mode: 0600
+  when: ec2_key.changed

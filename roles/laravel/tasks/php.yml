@@ -1,0 +1,34 @@
+- name: Install PHP (RedHat Family)
+  yum: state=present name={{ item }}
+  with_items:
+    - php70-devel
+    - php70-opcache
+    - php70-cli
+    - php70-common
+    - php70-mcrypt
+    - php70-mbstring
+    - php70-mysqlnd
+    - php7-pear
+    - php70-pdo
+    - php70-xml
+    - php70-zip
+  when: ansible_os_family == "RedHat"
+  tags: php
+
+- name: Install PHP (Debian Family)
+  apt: state=present name={{ item }}
+  with_items:
+    - php7.0
+    - php7.0-opcache
+    - php7.0-cli
+    - php7.0-common
+    - php7.0-mcrypt
+    - php7.0-mysql
+    - php7.0-mbstring
+    - php-pear
+    - php7.0-pdo
+    - php7.0-xml
+    - php7.0-zip
+    - libapache2-mod-php
+  when: ansible_os_family == "Debian"
+  tags: php

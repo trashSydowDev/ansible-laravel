@@ -1,0 +1,8 @@
+---
+
+- name: Install and configure Laravel
+  hosts: all
+  become: yes
+
+  roles:
+    - laravel

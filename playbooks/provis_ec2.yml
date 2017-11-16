@@ -1,0 +1,20 @@
+---
+
+- name: Starting Launch Configuration 
+  hosts: localhost
+  gather_facts: False
+  vars_files:
+    - /etc/ansible/library/aws_var_config.yml
+  vars:
+    aws_environment: staging
+    ec2_name: "laravel-app-{{ aws_environment }}"
+    security_group: "{{ sg_laravel_gname }}"
+    keypair: ansible-demo-key
+    instance_type: t2.small
+    image: ami-6057e21a
+    region: us-east-1
+    subnet_id: "{{ public_subnet_id }}"
+    public: yes
+  
+  roles:
+    - ec2

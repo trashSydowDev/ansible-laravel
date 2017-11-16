@@ -1,0 +1,7 @@
+# Remove some files for Ansible Repository 
+*.retry
+*.swp
+*.lock.info
+.vscode
+*.pem
+library/*.yml

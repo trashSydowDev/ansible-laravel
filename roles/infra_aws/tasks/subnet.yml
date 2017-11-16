@@ -1,0 +1,26 @@
+### Public Subnets ###
+
+- name: Create Public Subnet [AZ-1]
+  ec2_vpc_subnet:
+    state: "present"
+    vpc_id: "{{ vpc_id }}"
+    cidr: "{{ public_subnet_1_cidr }}"
+    az: "{{ aws_region }}a"
+    region: "{{ aws_region }}"
+    resource_tags:
+      Name: "Public Subnet 1A"
+  register: public_subnet_az1
+
+- name: Set Public Subnet ID in variable [AZ-1]
+  set_fact:
+    public_subnet_az1_id: "{{ public_subnet_az1.subnet.id }}"
+
+- name: Public Subnet ID Print
+  debug: msg="{{ public_subnet_az1_id }}"
+
+- name: Save Public Subnet ID into AWS VAR Config File
+  lineinfile:
+    path: "{{ aws_var_config_file }}"
+    regexp: "^public_subnet_id:"
+    line: "public_subnet_id: {{ public_subnet_az1_id }}"
+  when: public_subnet_az1.changed

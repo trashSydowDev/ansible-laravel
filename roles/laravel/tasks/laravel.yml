@@ -1,0 +1,74 @@
+- stat:
+    path: "{{ laravel_app_path }}/{{ app_name }}/public"
+  register: st
+  tags: laravel
+
+- name: Create App Directory
+  file: path="{{ laravel_app_path }}" mode=0755 state=directory recurse=yes
+  when: st.stat.exists == False
+  tags: laravel
+
+- name: Install Laravel using Composer
+  composer:
+    command: require
+    global_command: yes
+    arguments: laravel/installer
+    working_dir: "{{ laravel_app_path }}"
+  when: st.stat.exists == False
+  tags: laravel
+
+- name: Create Application Laravel
+  composer:
+    command: create-project
+    arguments: laravel/laravel "{{ app_name }}"
+    working_dir: "{{ laravel_app_path }}"
+    prefer_dist: True
+  when: st.stat.exists == False
+  tags: laravel
+
+- name: Check HTML directory
+  stat:
+    path: "/var/www/html"
+  register: dir_html
+  tags: laravel
+
+- name: Remove html default directory
+  file: 
+    state: absent
+    path: "/var/www/html"
+  when: dir_html.stat.islnk == False
+  tags: laravel
+
+- name: Add Symlink 
+  file: src="{{ laravel_app_path }}/{{ app_name }}/public" dest=/var/www/html state=link
+  tags: laravel
+
+- name: Copy .env file to App Directory
+  template: 
+    src: .env.example.j2
+    dest: "{{ laravel_app_path }}/{{ app_name }}/.env"
+    mode: 0775
+  register: env_file
+  tags: laravel
+
+- name: Change Permission Storage App Dir
+  file: path="{{ laravel_app_path }}/{{ app_name }}/storage" mode=0777 state=directory recurse=yes
+  tags: laravel
+
+- name: Generate Key (RedHat)
+  shell: php artisan key:generate
+  args:
+    chdir: "{{ laravel_app_path }}/{{ app_name }}/"
+  when: env_file.changed and ansible_os_family == "RedHat"
+  notify:
+    - restart httpd
+  tags: laravel
+
+- name: Generate Key (Debian)
+  shell: php artisan key:generate
+  args:
+    chdir: "{{ laravel_app_path }}/{{ app_name }}/"
+  when: env_file.changed and ansible_os_family == "Debian"
+  notify:
+    - restart apache2
+  tags: laravel

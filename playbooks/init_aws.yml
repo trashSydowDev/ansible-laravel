@@ -1,0 +1,7 @@
+---
+
+- name: Create Ansible Demo Infrastructure on AWS 
+  hosts: localhost
+
+  roles:
+    - infra_aws
