@@ -1,6 +1,7 @@
 - name: Install PHP (RedHat Family)
   yum: state=present name={{ item }}
   with_items:
+    - php70
     - php70-devel
     - php70-opcache
     - php70-cli

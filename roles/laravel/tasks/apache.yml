@@ -1,5 +1,5 @@
 - name: Install Apache (RedHat Family)
-  yum: state=present name=httpd
+  yum: state=present name=httpd24
   when: ansible_os_family == "RedHat"
   tags: apache
 
@@ -16,4 +16,9 @@
 - name: Enable Apache (Debian Family)
   service: name=apache2 enabled=yes state=started
   when: ansible_os_family == "Debian"
+  tags: apache
+
+- name: Remove Apache Welcome Conf File
+  file: path='/etc/httpd/conf.d/welcome.conf' state=absent
+  when: ansible_os_family == "RedHat"
   tags: apache
